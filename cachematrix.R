@@ -8,16 +8,16 @@
 ## A function to creat a special object with matrix and its cached inverse
 
 makeCacheMatrix <- function(x = matrix()) {
-  i <- NULL
-  set <- function(y) {
+  i <- NULL                                  ##setting cache as NULL for inverse matrix
+  set <- function(y) {                       ##defining function of matrix x and i
     x <<- y
     i <<- NULL
   }
-  get <- function() x
-  setinverse <- function(solve) i <<- solve
-  getinverse <- function() i
-  list(set = set, get = get,
-       setinverse = setinverse,
+  get <- function() x                        ##returning x      
+  setinverse <- function(solve) i <<- solve  ##setting inversed x as i
+  getinverse <- function() i                 ##rerutning inversed x as i
+  list(set = set, get = get,                 ##returning special list
+       setinverse = setinverse,              ##with functions 
        getinverse = getinverse)
 }
 
