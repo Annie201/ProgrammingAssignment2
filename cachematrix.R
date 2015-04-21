@@ -1,15 +1,40 @@
-## Put comments here that give an overall description of what your
-## functions do
+## Making special obejct with cached inversed matrix of input x, and
+## recomputing the inversed matrix when cached value is null.
+##
+## how to execute
+## test <- makeCacheMatrix(matrix x)
+## cacheSolve(test)
 
-## Write a short comment describing this function
+## A function to creat a special object with matrix and its cached inverse
 
 makeCacheMatrix <- function(x = matrix()) {
-
+  i <- NULL
+  set <- function(y) {
+    x <<- y
+    i <<- NULL
+  }
+  get <- function() x
+  setinverse <- function(solve) i <<- solve
+  getinverse <- function() i
+  list(set = set, get = get,
+       setinverse = setinverse,
+       getinverse = getinverse)
 }
 
 
-## Write a short comment describing this function
+## A function to generate special "inverse matrix" 
+## with makeCacheMatrix function.
+## Checking cached inversed matrix before a new computation.
 
 cacheSolve <- function(x, ...) {
         ## Return a matrix that is the inverse of 'x'
+  i <- x$getinverse()                 ##getting i as inversed x from cache memory
+  if(!is.null(i)) {                   ##checking chached inversed matrix
+    message("getting cached data")
+    return(i)
+  }
+  input_data <- x$get()               ##with empty cached, getting x
+  i <- solve(input_data, ...)         ##inverse x
+  x$setinverse(i)                     ##set inversed matrix of x as i
+  i                                   ##return inversed matrix i
 }
